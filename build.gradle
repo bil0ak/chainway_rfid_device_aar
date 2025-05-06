@@ -1,18 +1,17 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        google()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.4'
-    }
+plugins {
+    id 'java' // Add this to provide the 'assemble' task
+    id 'maven-publish'
 }
-
-apply plugin: 'maven-publish'
 
 group = 'com.github.bil0ak'
 version = '1.0.2'
 
+// This creates a "dummy" jar task that JitPack can use for the 'assemble' task
+jar {
+    // Leave this empty if you're only providing an AAR
+}
+
+// Define your publishing configuration
 publishing {
     publications {
         mavenAar(MavenPublication) {
@@ -20,7 +19,30 @@ publishing {
             artifactId = 'chainway_rfid_device_aar'
             version = '1.0.2'
             
-            artifact("$projectDir/libs/DeviceAPI_ver20250209_release.aar")
+            // Reference your AAR file directly
+            artifact("$projectDir/DeviceAPI_ver20250209_release.aar")
+            
+            // Add any dependencies your AAR might have
+            pom.withXml {
+                def dependencies = asNode().appendNode('dependencies')
+                // Add dependencies here if needed
+                // Example:
+                // def dependency = dependencies.appendNode('dependency')
+                // dependency.appendNode('groupId', 'com.example')
+                // dependency.appendNode('artifactId', 'library')
+                // dependency.appendNode('version', '1.0.0')
+            }
         }
     }
+}
+
+// This creates an explicit task for JitPack to reference
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from 'src/main/java'
+}
+
+// Ensure all tasks are available for JitPack
+artifacts {
+    archives sourcesJar
 }
