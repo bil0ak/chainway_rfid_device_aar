@@ -1,9 +1,26 @@
 buildscript {
     repositories {
-        google()
         mavenCentral()
+        google()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.4'
+    }
+}
+
+apply plugin: 'maven-publish'
+
+group = 'com.github.bil0ak'
+version = '1.0.2'
+
+publishing {
+    publications {
+        mavenAar(MavenPublication) {
+            groupId = 'com.github.bil0ak'
+            artifactId = 'chainway_rfid_device_aar'
+            version = '1.0.2'
+            
+            artifact("$projectDir/libs/DeviceAPI_ver20250209_release.aar")
+        }
     }
 }
