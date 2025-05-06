@@ -1,35 +1,9 @@
-apply plugin: 'com.android.library'
-apply plugin: 'maven-publish'
-
-group = 'com.rscja'
-version = '1.0.0'
-
-android {
-    compileSdkVersion 34
-
-    defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 34
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
     }
-
-    lintOptions {
-        abortOnError false
-    }
-
-    publishing {
-        singleVariant("release")
-    }
-}
-
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                groupId = 'com.rscja'
-                artifactId = 'deviceapi'
-                version = '1.0.0'
-                artifact file('DeviceAPI_ver20250209_release.aar')
-            }
-        }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.0.4'
     }
 }
