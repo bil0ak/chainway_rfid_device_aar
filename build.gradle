@@ -20,7 +20,7 @@ publishing {
             version = '1.0.2'
             
             // Reference your AAR file directly
-            artifact("$projectDir/DeviceAPI_ver20250209_release.aar")
+            artifact("$projectDir/libs/DeviceAPI_ver20250209_release.aar")
             
             // Add any dependencies your AAR might have
             pom.withXml {
